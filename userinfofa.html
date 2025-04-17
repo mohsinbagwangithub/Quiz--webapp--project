@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% load static %}
+    <title>Radhee - User Info</title>
+    <link href="{% static 'assets/img/logo.jpg' %}" rel="icon">
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+        crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+        crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        /*
+    DEMO STYLE
+*/
+        @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+        }
+
+        p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            font-weight: 300;
+            line-height: 1.7em;
+            color: #999;
+        }
+
+        a,
+        a:hover,
+        a:focus {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .navbar {
+            padding: 15px 10px;
+            background: #fff;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 12px rgb(0 0 0 / 30%);
+        }
+
+        .navbar-btn {
+            box-shadow: none;
+            outline: none !important;
+            border: none;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px dashed #ddd;
+            margin: 40px 0;
+        }
+
+        /* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            perspective: 1500px;
+        }
+
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #1b1b1b;
+            color: #fff;
+            transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+            transform-origin: bottom left;
+        }
+
+        #sidebar.active {
+            margin-left: -250px;
+            transform: rotateY(100deg);
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #1b1b1b;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+            border-bottom: 1px solid #47748b;
+        }
+
+        #sidebar ul p {
+            color: #fff;
+            padding: 10px;
+        }
+
+        #sidebar ul li a {
+            padding: 10px;
+            font-size: 1.1em;
+            display: block;
+        }
+
+        #sidebar ul li a:hover {
+            color: #1b1b1b;
+            background: #fff;
+        }
+
+        #sidebar ul li.active>a,
+        a[aria-expanded="true"] {
+            color: #fff;
+            background: #1b1b1b;
+        }
+
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        ul ul a {
+            font-size: 0.9em !important;
+            padding-left: 30px !important;
+            background: #1b1b1b;
+        }
+
+        ul.CTAs {
+            padding: 20px;
+        }
+
+        ul.CTAs a {
+            text-align: center;
+            font-size: 0.9em !important;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        a.download {
+            background: #fff;
+            color: #1b1b1b;
+        }
+
+        a.article,
+        a.article:hover {
+            background: #1b1b1b !important;
+            color: #fff !important;
+        }
+
+
+
+        /* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+        #content {
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
+        @import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+        * {
+            font-size: 16px;
+        }
+
+        input:focus,
+        button:focus {
+            outline: none;
+        }
+
+        button:hover,
+        .reset:hover {
+            opacity: .8;
+        }
+
+        button:active,
+        .reset:active {
+            opacity: .5;
+        }
+
+        .regForm {
+            background-color: #ffffff;
+            margin: 0px auto;
+            font-family: Raleway;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 12px rgb(0 0 0 / 30%);
+        }
+
+
+        h1 {
+            text-align: center
+        }
+
+        input {
+            padding: 6px;
+            font-size: 14px;
+            font-family: Raleway;
+            border: 1px solid #aaaaaa;
+            border-radius: 10px;
+        }
+
+        .tab input:focus {
+            border: 1px solid #1b1b1b a !important;
+            outline: none
+        }
+
+        input.invalid {
+            border: 1px solid #e03a0666
+        }
+
+        .tab {
+            display: none
+        }
+
+        button {
+            background-color: #1b1b1b;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            padding: 10px 20px;
+            font-size: 17px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer
+        }
+
+        button:hover {
+            opacity: 0.8
+        }
+
+        button:focus {
+            outline: none !important
+        }
+
+        #prevBtn {
+            background-color: #bbbbbb
+        }
+
+        .all-steps {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            width: 100%;
+            display: inline-flex;
+            justify-content: center
+        }
+
+        .step {
+            height: 40px;
+            width: 40px;
+            margin: 0 2px;
+            background-color: #bbbbbb;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            color: #1b1b1b;
+            opacity: 0.5
+        }
+
+        .step.active {
+            opacity: 1
+        }
+
+        .step.finish {
+            color: #fff;
+            background: #1b1b1b;
+            opacity: 1
+        }
+
+        .all-steps {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 15px
+        }
+
+        .thanks-message {
+            display: none
+        }
+
+        /* Sponsers Logo */
+        .sponser1 {
+            width: 100px;
+            height: 100px;
+            display: block;
+            margin-left: 10px;
+            border-radius: 50px;
+        }
+
+        .sponser2 {
+            width: 100px;
+            height: 100px;
+            display: block;
+            margin-left: 70px;
+            border-radius: 50px;
+        }
+
+        .sponserLogo {
+            /* position: absolute; */
+            display: flex;
+            /* justify-content: center; */
+        }
+
+        .sponserLogo h2 {
+            text-align: center;
+            margin-left: 70px;
+            padding: 20px;
+        }
+
+        /* End SponserLogo */
+    </style>
+</head>
+
+<body onload="detectLanguage()">
+    <div class="wrapper">
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid" style="width:auto;">
+                    <h3 style="font-weight: 600;font-size: 30px;color:#1b1b1b;">Radhee</h3>
+                </div>
+            </nav>
+            <div class="container mt-5">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col-md-8">
+                        <form id="eForm" class="regForm">
+                            <!-- SponserLogo -->
+                            <div class="sponserLogo">
+                                <img class="sponser1" src="{% static 'assets/img/logo.jpg' %}" alt="">
+                                <h2>User Information</h2>
+                                <img class="sponser2" src="{% static 'assets/img/logo.jpg' %}" alt="">
+                            </div>
+                            <br>
+
+                            <!-- <h2 style="text-align: center;">User Information</h2> -->
+                            <div class="tab" style="display: block;" style="align-items: center;">
+                                <h5>Enter your Name (Write Name as you want in the Certificate):</h5>
+                                <input id="username" type="text" />
+                                <h5 style="margin-top: 12px;">Enter your Email Address:</h5>
+                                <input id="useremail" type="text" />
+                                <h5 style="margin-top: 12px;">Select your Gender:</h5>
+                                <input id="male" type="radio" name="gender" value="Male"> Male<br>
+                                <input id="female" type="radio" name="gender" value="Female" /> Female<br>
+                                <input id="transmale" type="radio" name="gender" value="TransMale" /> Transgender
+                                Male<br>
+                                <input id="transfemale" type="radio" name="gender" value="TransFemale" /> Transgender
+                                Female<br>
+                                <h5 style="margin-top: 12px;">Select your Age Group:</h5>
+                                <input type="radio" name="age" /> less than 18<br>
+                                <input type="radio" name="age" /> 18-25<br>
+                                <input type="radio" name="age" /> 26-45<br>
+                                <input type="radio" name="age" /> 46-65<br>
+                                <input type="radio" name="age" /> 66 and Above
+                                <h5 style="margin-top: 12px;">Enter your Profession:</h5>
+                                <input type="radio" name="prof" onclick="plost()" /> School Student<br>
+                                <input type="radio" name="prof" onclick="plost()" /> College Student<br>
+                                <input type="radio" name="prof" onclick="plost()" /> Teaching / Non-Teaching Staff<br>
+                                <input type="radio" name="prof" onclick="plost()" /> Private Employee<br>
+                                <input type="radio" name="prof" onclick="plost()" /> Government Employee<br>
+                                <input type="radio" name="prof" onclick="plost()" /> Self-employee<br>
+                                <input type="radio" name="prof" onclick="pclicked()" /> Others<br>
+                                <h5 id="pheadSpecify" style="margin-top: 12px; display: none;"> Specify:</h5>
+                                <input type="text" id="pspecify" style="margin-top: 12px; display: none;">
+                                <h5 style="margin-top: 12px;">Name of your Organization:</h5>
+                                <input id="nameoforg" type="text" />
+                                <h5 style="margin-top: 12px;">How you came to know about this quiz?</h5>
+                                <input type="radio" name="social" onclick="lost()" /> Friends<br>
+                                <input type="radio" name="social" onclick="lost()" /> Social Media<br>
+                                <input type="radio" name="social" onclick="lost()" /> Organization<br>
+                                <input type="radio" name="social" onclick="lost()" /> Newspaper<br>
+                                <input type="radio" name="social" onclick="clicked()" /> Others<br>
+                                <h5 id="headSpecify" style="margin-top: 12px; display: none;"> Specify:</h5>
+                                <input type="text" id="specify" style="margin-top: 12px; display: none;">
+                            </div><br>
+                            <div id="nextprevious">
+                                <button type="button" style="display: block;" id="saveBtn" onclick="startQuiz()">Save
+                                    Details</button>
+                                <a href="{% url 'quizfa' %}"><button type="button" style="display: none;"
+                                        id="startBtn">Start Quiz</button></a><br>
+                            </div>
+                        </form>
+                        <form id="hForm" class="regForm" style="display: none;">
+                            <h2 style="text-align: center;">यूजर जानकारी</h2>
+                            <div class="tab" style="display: block;" style="align-items: center;">
+                                <h5>अपना नाम दर्ज करें (वही नाम लिखें जो प्रमाणपत्र में चाहिए):</h5>
+                                <input id="husername" type="text" />
+                                <h5 style="margin-top: 12px;">अपना ईमेल पता दर्ज करें:</h5>
+                                <input id="huseremail" type="text" />
+                                <h5 style="margin-top: 12px;">अपना लिंग चुनें:</h5>
+                                <input id="male" type="radio" name="gender" value="Male"> पुरुष<br>
+                                <input id="female" type="radio" name="gender" value="Female" /> महिला<br>
+                                <input id="transmale" type="radio" name="gender" value="TransMale" /> ट्रांसजेंडर
+                                पुरुष<br>
+                                <input id="transfemale" type="radio" name="gender" value="TransFemale" /> ट्रांसजेंडर
+                                महिला<br>
+                                <h5 style="margin-top: 12px;">अपना आयु समूह चुनें:</h5>
+                                <input type="radio" name="age" /> १८ से कम है<br>
+                                <input type="radio" name="age" /> १८ - २५<br>
+                                <input type="radio" name="age" /> २६ - ४५<br>
+                                <input type="radio" name="age" /> ४६ - ६५<br>
+                                <input type="radio" name="age" /> ६६ या अधिक
+                                <h5 style="margin-top: 12px;">अपना प्रोफेशन दर्ज करें:</h5>
+                                <input id="huserprofession" type="text" />
+                                <h5 style="margin-top: 12px;">आपके संगठन का नाम:</h5>
+                                <input type="radio" name="prof" onclick="plost()" /> विद्यालय का छात्र<br>
+                                <input type="radio" name="prof" onclick="plost()" /> कॉलेज के छात्र<br>
+                                <input type="radio" name="prof" onclick="plost()" /> टीचिंग / नॉन टीचिंग स्टाफ<br>
+                                <input type="radio" name="prof" onclick="plost()" /> निजी कर्मचारी<br>
+                                <input type="radio" name="prof" onclick="plost()" /> सरकारी कर्मचारी<br>
+                                <input type="radio" name="prof" onclick="plost()" /> स्वयं कर्मचारी<br>
+                                <input type="radio" name="prof" onclick="pclicked()" /> अन्य<br>
+                                <h5 id="phheadSpecify" style="margin-top: 12px; display: none;"> कृपया निर्दिष्ट करें:
+                                </h5>
+                                <input type="text" id="phspecify" style="margin-top: 12px; display: none;">
+                                <h5 style="margin-top: 12px;">आपको इस क्विज के बारे में कैसे पता चला?</h5>
+                                <input type="radio" name="social" onclick="lost()" /> दोस्त<br>
+                                <input type="radio" name="social" onclick="lost()" /> सामाजिक मीडिया<br>
+                                <input type="radio" name="social" onclick="lost()" /> संगठन<br>
+                                <input type="radio" name="social" onclick="lost()" /> समाचार पत्र<br>
+                                <input type="radio" name="social" onclick="clicked()" /> अन्य<br>
+                                <h5 id="hheadSpecify" style="margin-top: 12px; display: none;"> कृपया निर्दिष्ट करें:
+                                </h5>
+                                <input type="text" id="hspecify" style="margin-top: 12px; display: none;">
+                            </div><br>
+                            <div id="nextprevious">
+                                <button type="button" style="display: block;" id="hsaveBtn" onclick="hstartQuiz()">विवरण
+                                    सहेजें</button>
+                                <a href="{% url 'quizhindi' %}"><button type="button" style="display: none;"
+                                        id="hstartBtn">क्विज शुरू करें</button></a><br>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        function startQuiz() {
+            var name = document.getElementById('username').value;
+            var email = document.getElementById('useremail').value;
+            var org = document.getElementById('nameoforg').value;
+            if (name == "" || email == "" || org == "") {
+                swal("Warning", "Please, Enter the required details!", "warning");
+            } else {
+                document.getElementById("saveBtn").style.display = "none";
+                document.getElementById("startBtn").style.display = "block";
+                document.cookie = "username=" + name + ";expires=Thu, 18 Dec 2026 12:00:00 UTC; path=/";
+                document.cookie = "useremail=" + email + ";expires=Thu, 18 Dec 2026 12:00:00 UTC; path=/";
+            }
+        }
+
+        function hstartQuiz() {
+            var name = document.getElementById('husername').value;
+            var email = document.getElementById('huseremail').value;
+            var org = document.getElementById('hnameoforg').value;
+            if (name == "" || email == "" || org == "") {
+                swal("Warning", "Please, Enter the required details!", "warning");
+            } else {
+                document.getElementById("hsaveBtn").style.display = "none";
+                document.getElementById("hstartBtn").style.display = "block";
+                document.cookie = "username=" + name + ";expires=Thu, 18 Dec 2026 12:00:00 UTC; path=/";
+                document.cookie = "useremail=" + email + ";";
+            }
+        }
+    </script>
+    <script>
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(nameEQ) != -1) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        var lang = getCookie("language");
+
+        function detectLanguage() {
+            if (lang == "hindi") {
+                document.getElementById("eForm").style.display = "none";
+                document.getElementById("hForm").style.display = "block";
+            }
+        }
+
+        function clicked() {
+            if (lang == "hindi") {
+                document.getElementById("hheadSpecify").style.display = "block";
+                document.getElementById("hspecify").style.display = "block";
+            } else {
+                document.getElementById("headSpecify").style.display = "block";
+                document.getElementById("specify").style.display = "block";
+            }
+        }
+
+        function lost() {
+            if (lang == "hindi") {
+                document.getElementById("hheadSpecify").style.display = "none";
+                document.getElementById("hspecify").style.display = "none";
+            } else {
+                document.getElementById("headSpecify").style.display = "none";
+                document.getElementById("specify").style.display = "none";
+            }
+        }
+
+        function pclicked() {
+            if (lang == "hindi") {
+                document.getElementById("phheadSpecify").style.display = "block";
+                document.getElementById("phspecify").style.display = "block";
+            } else if (lang == "marathi") {
+                document.getElementById("pmheadSpecify").style.display = "block";
+                document.getElementById("pmspecify").style.display = "block";
+            }
+            else {
+                document.getElementById("pheadSpecify").style.display = "block";
+                document.getElementById("pspecify").style.display = "block";
+            }
+        }
+
+        function plost() {
+            if (lang == "hindi") {
+                document.getElementById("phheadSpecify").style.display = "none";
+                document.getElementById("phspecify").style.display = "none";
+            } else if (lang == "marathi") {
+                document.getElementById("pmheadSpecify").style.display = "none";
+                document.getElementById("pmspecify").style.display = "none";
+            } else {
+                document.getElementById("pheadSpecify").style.display = "none";
+                document.getElementById("pspecify").style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
